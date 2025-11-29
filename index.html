@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Network Engineering Projects | Dr. Dzidotor</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content="Network engineering, secure infrastructure, and automation projects by Dr. Godwin K. Dzidotor."
+  />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    :root {
+      --bg: #020617;
+      --bg-card: #020617;
+      --accent: #22c55e;
+      --accent-soft: rgba(34, 197, 94, 0.18);
+      --accent-strong: #4ade80;
+      --text-main: #e5e7eb;
+      --text-muted: #9ca3af;
+      --border-subtle: #1e293b;
+      --radius-lg: 18px;
+      --radius-xl: 28px;
+      --shadow-soft: 0 18px 48px rgba(15, 23, 42, 0.75);
+      --transition-med: 0.25s ease-out;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #020617 0, #020617 38%, #020617 100%);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 24px 12px 40px;
+    }
+
+    .shell {
+      width: 100%;
+      max-width: 1180px;
+      background: linear-gradient(135deg, #020617 0%, #020617 60%, #020617 100%);
+      border-radius: 32px;
+      border: 1px solid rgba(148, 163, 184, 0.16);
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .shell::before {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      border-radius: inherit;
+      background: radial-gradient(circle at top right,
+          rgba(34, 197, 94, 0.22),
+          transparent 55%);
+      opacity: 0.9;
+      pointer-events: none;
+      mix-blend-mode: screen;
+    }
+
+    .shell-inner {
+      position: relative;
+      z-index: 1;
+      padding: 18px 22px 24px;
+    }
+
+    @media (min-width: 900px) {
+      .shell-inner {
+        padding: 22px 26px 28px;
+      }
+    }
+
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 25% 0, #4ade80, #0f172a);
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 18px;
+      color: #dcfce7;
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.85);
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .brand-text h1 {
+      font-size: 16px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #e5e7eb;
+    }
+
+    .brand-text span {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .chip {
+      padding: 6px 11px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      font-size: 11px;
+      color: var(--text-muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+
+    .chip-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #4ade80;
+      box-shadow: 0 0 0 4px rgba(74, 222, 128, 0.25);
+    }
+
+    /* Hero */
+    .hero {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 18px;
+      margin-bottom: 20px;
+    }
+
+    @media (max-width: 820px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .hero-left {
+      padding: 16px 16px 16px;
+      border-radius: var(--radius-xl);
+      background: radial-gradient(circle at top left,
+          rgba(34, 197, 94, 0.2),
+          transparent 60%),
+        radial-gradient(circle at bottom right,
+          rgba(22, 101, 52, 0.95),
+          #020617 70%);
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-title {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .hero-subtitle {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .hero-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+
+    .pill {
+      font-size: 11px;
+      padding: 5px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      background: rgba(15, 23, 42, 0.75);
+      color: var(--text-main);
+    }
+
+    .hero-metric-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-size: 12px;
+    }
+
+    .metric {
+      padding: 6px 8px;
+      border-radius: 10px;
+      background: rgba(15, 23, 42, 0.96);
+      border: 1px solid rgba(22, 101, 52, 0.9);
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 120px;
+    }
+
+    .metric-label {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .metric-value {
+      font-weight: 600;
+      font-size: 13px;
+    }
+
+    .hero-right {
+      border-radius: var(--radius-xl);
+      background: radial-gradient(circle at top,
+          rgba(22, 101, 52, 0.95),
+          #020617 65%);
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      padding: 12px 14px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .hero-right h2 {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+    }
+
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 12px;
+    }
+
+    .timeline-item {
+      padding: 7px 8px;
+      border-radius: 12px;
+      background: rgba(15, 23, 42, 0.92);
+      border: 1px solid rgba(31, 41, 55, 0.9);
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .timeline-main {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .timeline-main strong {
+      font-size: 12px;
+    }
+
+    .timeline-main span {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .badge {
+      font-size: 11px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: rgba(22, 101, 52, 0.9);
+      border: 1px solid rgba(34, 197, 94, 0.7);
+      color: #dcfce7;
+      white-space: nowrap;
+    }
+
+    /* Tabs */
+    .tabs-wrapper {
+      margin-top: 12px;
+    }
+
+    .tab-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .tab-btn {
+      border: 1px solid rgba(31, 41, 55, 0.9);
+      background: rgba(15, 23, 42, 0.9);
+      color: var(--text-muted);
+      padding: 7px 11px;
+      font-size: 12px;
+      border-radius: 999px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all var(--transition-med);
+    }
+
+    .tab-btn span {
+      font-size: 15px;
+    }
+
+    .tab-btn.active {
+      background: linear-gradient(135deg, #22c55e, #4ade80);
+      border-color: transparent;
+      color: #022c22;
+      box-shadow: 0 10px 30px rgba(34, 197, 94, 0.45);
+      transform: translateY(-1px);
+    }
+
+    .tab-panels {
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-subtle);
+      background: radial-gradient(circle at top left,
+          rgba(15, 23, 42, 0.97),
+          #020617 70%);
+      padding: 14px 14px 16px;
+    }
+
+    .tab-panel {
+      display: none;
+      animation: fadeIn var(--transition-med);
+    }
+
+    .tab-panel.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(4px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Layout helpers */
+    .grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    @media (min-width: 720px) {
+      .grid.cols-2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    .card {
+      border-radius: 16px;
+      background: rgba(15, 23, 42, 0.98);
+      border: 1px solid rgba(22, 101, 52, 0.9);
+      padding: 11px 12px 12px;
+      box-shadow: 0 14px 36px rgba(15, 23, 42, 0.8);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+
+    .card-title {
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .card-tag {
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(34, 197, 94, 0.75);
+      background: rgba(22, 101, 52, 0.96);
+      color: #dcfce7;
+      white-space: nowrap;
+    }
+
+    .card-body {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .card-body ul {
+      margin-top: 6px;
+      padding-left: 16px;
+      display: grid;
+      gap: 4px;
+    }
+
+    .card-foot {
+      margin-top: 8px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      font-size: 11px;
+    }
+
+    .foot-pill {
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.96);
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      color: var(--text-muted);
+    }
+
+    .text-block {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      display: grid;
+      gap: 8px;
+    }
+
+    .text-block h3 {
+      font-size: 13px;
+      color: #e5e7eb;
+      margin-bottom: 3px;
+    }
+
+    .resume-mini {
+      display: grid;
+      gap: 10px;
+    }
+
+    @media (min-width: 720px) {
+      .resume-mini {
+        grid-template-columns: 1.1fr 1fr;
+      }
+    }
+
+    .badge-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    .badge-outline {
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      color: var(--text-muted);
+    }
+
+    a.link {
+      color: var(--accent-strong);
+      text-decoration: none;
+      font-size: 12px;
+    }
+
+    a.link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <div class="shell-inner">
+      <!-- Top bar -->
+      <header class="top-bar">
+        <div class="brand">
+          <div class="avatar">GD</div>
+          <div class="brand-text">
+            <h1>Dr. Godwin K. Dzidotor</h1>
+            <span>Cybersecurity • DevSecOps • Cloud Security</span>
+          </div>
+        </div>
+        <div class="chip">
+          <span class="chip-dot"></span>
+          Network Engineering Projects · Secure by Design
+        </div>
+      </header>
+
+      <!-- Hero -->
+      <section class="hero">
+        <div class="hero-left">
+          <div class="hero-title">Network Engineering & Secure Infrastructure Lab</div>
+          <div class="hero-subtitle">
+            Real-world network designs, hospital infrastructure, and security-first
+            deployments combining CCNA/CCNP-level routing & switching with modern
+            monitoring and automation.
+          </div>
+
+          <div class="hero-pills">
+            <span class="pill">CCNP · CCNA</span>
+            <span class="pill">Secure Routing & Switching</span>
+            <span class="pill">Firewalls · VPN · SD-WAN</span>
+            <span class="pill">Auvik · ConnectWise · IT Glue</span>
+          </div>
+
+          <div class="hero-metric-row">
+            <div class="metric">
+              <span class="metric-label">Industry Experience</span>
+              <span class="metric-value">Healthcare Networks</span>
+            </div>
+            <div class="metric">
+              <span class="metric-label">Primary Platforms</span>
+              <span class="metric-value">Cisco · Extreme · Windstream</span>
+            </div>
+          </div>
+        </div>
+
+        <aside class="hero-right">
+          <h2>Network Career Snapshot</h2>
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-main">
+                <strong>Network Engineer</strong>
+                <span>Manchester Memorial Hospital · 2013 – 2015</span>
+              </div>
+              <div class="badge">Hospital Network Design</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-main">
+                <strong>Information Security Roles</strong>
+                <span>2015 – Present</span>
+              </div>
+              <div class="badge">Securing Infrastructure</div>
+            </div>
+          </div>
+        </aside>
+      </section>
+
+      <!-- Tabs -->
+      <section class="tabs-wrapper">
+        <nav class="tab-nav">
+          <button class="tab-btn active" data-tab="net-projects">
+            <span>🌐</span> Network Projects
+          </button>
+          <button class="tab-btn" data-tab="cyber-portfolio">
+            <span>🛡️</span> Cybersecurity Portfolio
+          </button>
+          <button class="tab-btn" data-tab="devsecops">
+            <span>⚙️</span> DevSecOps Labs
+          </button>
+          <button class="tab-btn" data-tab="tools">
+            <span>🧰</span> Tools & Scripts
+          </button>
+          <button class="tab-btn" data-tab="resume">
+            <span>📄</span> Resume Snapshot
+          </button>
+        </nav>
+
+        <div class="tab-panels">
+          <!-- Network Engineering Projects -->
+          <article id="net-projects" class="tab-panel active">
+            <div class="grid cols-2">
+              <div class="card">
+                <div class="card-header">
+                  <div class="card-title">Hospital Core & Distribution Network</div>
+                  <div class="card-tag">Design & Deployment</div>
+                </div>
+                <div class="card-body">
+                  Designed and supported secure network infrastructure for a hospital
+                  environment, balancing performance, segmentation, and compliance.
+                  <ul>
+                    <li>Implemented VLAN-based segmentation for clinical and admin traffic.</li>
+                    <li>Coordinated firewall and routing policies with systems/DB teams.</li>
+                    <li>Maintained high-availability connectivity for critical systems.</li>
+                  </ul>
+                </div>
+                <div class="card-foot">
+                  <span class="foot-pill">Cisco Routing & Switching</span>
+                  <span class="foot-pill">Firewall Rulesets</span>
+                  <span class="foot-pill">Network Diagrams (Lucidchart)</span>
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="card-header">
+                  <div class="card-title">Secure VPN & Remote Access</div>
+                  <div class="card-tag">VPN Design</div>
+                </div>
+                <div class="card-body">
+                  Built high-encryption site-to-site VPNs and tunnel interfaces to link
+                  remote facilities and cloud endpoints.
+                  <ul>
+                    <li>Configured IPSec VPNs with strong ciphers and key management.</li>
+                    <li>Documented topology and failover design in IT Glue.</li>
+                    <li>Monitored tunnel health and performance for uptime SLAs.</li>
+                  </ul>
+                </div>
+                <div class="card-foot">
+                  <span class="foot-pill">Site-to-Site VPN</span>
+                  <span class="foot-pill">Tunnel Interfaces</span>
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="card-header">
+                  <div class="card-title">Wireless Network Deployments</div>
+                  <div class="card-tag">Wi-Fi & Mobility</div>
+                </div>
+                <div class="card-body">
+                  Deployed and tuned wireless solutions using enterprise-grade access
+                  points and cloud controllers.
+                  <ul>
+                    <li>Configured and deployed APs (e.g., ExtremeCloud IQ).</li>
+                    <li>Optimized coverage and channels for high-density areas.</li>
+                    <li>Integrated wireless into existing security and VLAN models.</li>
+                  </ul>
+                </div>
+                <div class="card-foot">
+                  <span class="foot-pill">ExtremeCloud IQ APs</span>
+                  <span class="foot-pill">Wi-Fi Design</span>
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="card-header">
+                  <div class="card-title">SD-WAN & Monitoring</div>
+                  <div class="card-tag">Operations</div>
+                </div>
+                <div class="card-body">
+                  Supported SD-WAN deployments and end-to-end monitoring of distributed
+                  infrastructure.
+                  <ul>
+                    <li>Worked with Windstream SD-WAN for resilient connectivity.</li>
+                    <li>Leveraged Auvik for performance and fault monitoring.</li>
+                    <li>Tracked changes and tickets using ConnectWise.</li>
+                  </ul>
+                </div>
+                <div class="card-foot">
+                  <span class="foot-pill">Windstream SD-WAN</span>
+                  <span class="foot-pill">Auvik</span>
+                  <span class="foot-pill">ConnectWise</span>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Cybersecurity Portfolio (Network-Security Flavor) -->
+          <article id="cyber-portfolio" class="tab-panel">
+            <div class="text-block">
+              <h3>Network-Centric Cybersecurity Portfolio</h3>
+              <p>
+                Secure network design is at the core of effective cybersecurity.
+                These examples highlight how routing, switching, and segmentation
+                are combined with RMF-aligned controls and monitoring.
+              </p>
+            </div>
+            <div class="grid cols-2" style="margin-top: 10px;">
+              <div class="card">
+                <div class="card-header">
+                  <div class="card-title">Firewall Policy Engineering</div>
+                  <div class="card-tag">Perimeter Security</div>
+                </div>
+                <div class="card-body">
+                  <ul>
+                    <li>Worked with sysadmins and DBAs to implement firewall rules.</li>
+                    <li>Adopted least-privilege principles for ingress/egress flows.</li>
+                    <li>Maintained documentation for RMF control mapping (SC-7, AC-4).</li>
+                  </ul>
+                </div>
+                <div class="card-foot">
+                  <span class="foot-pill">Perimeter Defense</span>
+                  <span class="foot-pill">Network Security</span>
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="card-header">
+                  <div class="card-title">Patch & Upgrade Strategy</div>
+                  <div class="card-tag">Lifecycle Security</div>
+                </div>
+                <div class="card-body">
+                  <ul>
+                    <li>Scheduled patches/upgrades to minimize downtime and risk.</li>
+                    <li>Validated post-upgrade stability and performance.</li>
+                    <li>Aligned change activity to vulnerability findings and advisories.</li>
+                  </ul>
+                </div>
+                <div class="card-foot">
+                  <span class="foot-pill">System Hardening</span>
+                  <span class="foot-pill">Change Management</span>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- DevSecOps Labs -->
+          <article id="devsecops" class="tab-panel">
+            <div class="text-block">
+              <h3>DevSecOps-Style Networking Labs</h3>
+              <p>
+                This repo is ideal for hands-on labs that blend routing/switching
+                with automation and security guardrails. Below are example lab
+                concepts you can implement and commit as code/configs.
+              </p>
+            </div>
+            <div class="grid cols-2" style="margin-top: 10px;">
+              <div class="card">
+                <div class="card-header">
+                  <div class="card-title">Repeatable Lab Topologies</div>
+                  <div class="card-tag">IaC-Inspired</div>
+                </div>
+                <div class="card-body">
+                  <ul>
+                    <li>Template baseline configs for routers, switches, and firewalls.</li>
+                    <li>Standardize VLANs, IP schemas, and security zones.</li>
+                    <li>Store diagrams and configs together for quick spin-up.</li>
+                  </ul>
+                </div>
+                <div class="card-foot">
+                  <span class="foot-pill">Network Blueprints</span>
+                  <span class="foot-pill">Config Templates</span>
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="card-header">
+                  <div class="card-title">Automated Health & Log Checks</div>
+                  <div class="card-tag">Ops Automation</div>
+                </div>
+                <div class="card-body">
+                  <ul>
+                    <li>Use scripts to pull interface status and error counters.</li>
+                    <li>Summarize logs from routers/switches into quick reports.</li>
+                    <li>Flag anomalies that may indicate performance or security issues.</li>
+                  </ul>
+                </div>
+                <div class="card-foot">
+                  <span class="foot-pill">Scripting</span>
+                  <span class="foot-pill">Monitoring</span>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Tools & Scripts -->
+          <article id="tools" class="tab-panel">
+            <div class="text-block">
+              <h3>Tools & Scripts for Network Engineering</h3>
+              <p>
+                This section represents the operational toolkit used to design,
+                monitor, and document robust networks. You can link specific
+                GitHub scripts/configs from this repo as you add them.
+              </p>
+            </div>
+            <div class="grid cols-2" style="margin-top: 10px;">
+              <div class="card">
+                <div class="card-header">
+                  <div class="card-title">Monitoring & Documentation</div>
+                  <div class="card-tag">Operations</div>
+                </div>
+                <div class="card-body">
+                  <ul>
+                    <li>Auvik – topology discovery and real-time monitoring.</li>
+                    <li>ConnectWise – ticketing and change tracking.</li>
+                    <li>IT Glue – network/runbook documentation.</li>
+                    <li>Lucidchart – diagrams for designs and change review.</li>
+                  </ul>
+                </div>
+                <div class="card-foot">
+                  <span class="foot-pill">Auvik</span>
+                  <span class="foot-pill">ConnectWise</span>
+                  <span class="foot-pill">IT Glue</span>
+                  <span class="foot-pill">Lucidchart</span>
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="card-header">
+                  <div class="card-title">Script & Config Ideas</div>
+                  <div class="card-tag">Repo Content</div>
+                </div>
+                <div class="card-body">
+                  <ul>
+                    <li>Backup scripts for switch/router configs.</li>
+                    <li>Audit scripts for unused VLANs and interfaces.</li>
+                    <li>Config snippets for secure SSH, SNMPv3, and logging.</li>
+                  </ul>
+                </div>
+                <div class="card-foot">
+                  <span class="foot-pill">Config Backups</span>
+                  <span class="foot-pill">Security Baselines</span>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Resume Snapshot -->
+          <article id="resume" class="tab-panel">
+            <div class="resume-mini">
+              <div>
+                <div class="text-block">
+                  <h3>Professional Summary</h3>
+                  <p>
+                    Network and cybersecurity engineer with experience spanning
+                    hospital infrastructure, enterprise security assessment, and
+                    RMF-aligned governance. Combines hands-on routing/switching and
+                    firewall work with risk management, vulnerability assessment,
+                    and ATO support.
+                  </p>
+                </div>
+
+                <div style="margin-top: 10px;">
+                  <h3>Experience (Network & Security)</h3>
+                  <ul style="margin-top: 4px; padding-left: 16px; font-size: 11px; color: var(--text-muted);">
+                    <li>Network Engineer – Manchester Memorial Hospital.</li>
+                    <li>Information Security Analyst – UConn Health Center.</li>
+                    <li>Information System Security Assessor – Network Coverage LLC.</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div>
+                <h3 style="font-size: 13px; margin-bottom: 4px;">Education & Certifications</h3>
+                <div class="badge-stack">
+                  <span class="badge-outline">Ph.D., Chemical & Biomolecular Eng.</span>
+                  <span class="badge-outline">B.S., Chemical Engineering</span>
+                </div>
+                <div class="badge-stack" style="margin-top: 8px;">
+                  <span class="badge-outline">CISM</span>
+                  <span class="badge-outline">CompTIA Security+</span>
+                  <span class="badge-outline">CCNP</span>
+                  <span class="badge-outline">CCNA</span>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    const tabButtons = document.querySelectorAll(".tab-btn");
+    const panels = document.querySelectorAll(".tab-panel");
+
+    tabButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const id = btn.getAttribute("data-tab");
+
+        tabButtons.forEach((b) => b.classList.remove("active"));
+        panels.forEach((p) => p.classList.remove("active"));
+
+        btn.classList.add("active");
+        document.getElementById(id).classList.add("active");
+      });
+    });
+  </script>
+</body>
+</html>
